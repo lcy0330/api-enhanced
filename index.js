@@ -1,11 +1,17 @@
 const { constructServer } = require('./server')
+const generateConfig = require('./generateConfig')
 
-let appPromise = null
+let initPromise = null
+
+async function init() {
+  await generateConfig()
+  return constructServer()
+}
 
 module.exports = async (req, res) => {
-  if (!appPromise) {
-    appPromise = constructServer()
+  if (!initPromise) {
+    initPromise = init()
   }
-  const app = await appPromise
+  const app = await initPromise
   return app(req, res)
 }
