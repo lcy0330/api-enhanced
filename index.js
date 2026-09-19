@@ -1,10 +1,10 @@
-const { constructServer } = require('./server')
 const generateConfig = require('./generateConfig')
 
 let initPromise = null
 
 async function init() {
   await generateConfig()
+  const { constructServer } = require('./server')
   return constructServer()
 }
 
